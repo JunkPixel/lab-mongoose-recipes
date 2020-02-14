@@ -11,9 +11,26 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  .then(() => {
+  .then(x => {
     console.log(`Connected to the database: "${x.connections[0].name}"`);
-    // Run your code here, after you have insured that the connection was made
+  })
+  .then(x => {
+    return Recipe.findOneAndUpdate({ title: 'The Rigatoni alla Genovese' }, { duration: 100 });
+  })
+  .then(update => {
+    console.log(update);
+  })
+  .then(x => {
+    return Recipe.deleteOne({ title: 'Carrot Cake' });
+  })
+  .then(remove => {
+    console.log(remove);
+  })
+  .then(x => {
+    return mongoose.connection.close();
+  })
+  .then(disconnect => {
+    console.log('closing out');
   })
   .catch(error => {
     console.error('Error connecting to the database', error);
